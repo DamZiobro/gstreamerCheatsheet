@@ -1,0 +1,9 @@
+#==============================================================================================
+#pipelinePublic1 
+#Capture RTSP stream to file 
+gst-launch-1.0 rtspsrc location=rtsp://10.82.131.240:8554/h264ESVideoTest ! rtph264depay ! h264parse ! mp4mux ! filesink location=file.mp4
+
+#==============================================================================================
+#pipelinePublic2
+#Capture RTSP stream to files splitted to 10 seconds chunks:
+gst-launch-1.0 rtspsrc location=rtsp://10.82.131.240:8554/h264ESVideoTest ! rtph264depay ! h264parse ! splitmuxsink location=file%02d.mp4 max-size-time=10000000000
