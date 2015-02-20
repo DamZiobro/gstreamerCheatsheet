@@ -6,4 +6,9 @@ gst-launch-1.0 rtspsrc location=rtsp://10.82.131.240:8554/h264ESVideoTest ! rtph
 #==============================================================================================
 #pipelinePublic2
 #Capture RTSP stream to files splitted to 10 seconds chunks:
-gst-launch-1.0 rtspsrc location=rtsp://10.82.131.240:8554/h264ESVideoTest ! rtph264depay ! h264parse ! splitmuxsink location=file%02d.mp4 max-size-time=10000000000
+gst-launch-1.0 rtspsrc location=rtsp://10.82.131.240:8554/h264ESVideoTest ! rtph264depay ! h264parse ! splitmuxsink location=file%02d.mp4 max-size-time=10000000000 
+
+#==============================================================================================
+#pipelinePublic3
+#splitmuxsink test (overwritting max 2 files)
+gst-launch-1.0 videotestsrc ! x264enc ! h264parse ! splitmuxsink location=file%02d.mp4 max-size-time=3000000000 max-files=2
