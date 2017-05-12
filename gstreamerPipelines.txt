@@ -15,8 +15,15 @@ gst-launch-1.0 videotestsrc ! x264enc ! h264parse ! splitmuxsink location=file%0
 
 #==============================================================================================
 #pipelinePublic4
+# Get TV Channel from DVB and save it in as series of 10sec long MPEG2-TS files
 GST_DEBUG_DUMP_DOT_DIR=/tmp gst-launch-1.0 dvbbasebin modulation="QAM 64" trans-mode=8k bandwidth=8 frequency=682000000 code-rate-lp=AUTO code-rate-hp=2/3 guard=4  hierarchy=0 program-numbers=4170 name=src .src ! queue ! tsdemux program-number=4170 name=d  splitmuxsink location=file_%llu.ts max-size-time=1000000000 muxer=mpegtsmux name=mux   d. ! queue ! mpegvideoparse ! queue ! mux.   d. ! queue ! mpegaudioparse ! queue ! mux.audio_%u
 
 #==============================================================================================
 #pipelinePublic5
+# Create one MPEG2-TS file from series of small chunk MPEG2-TS files
 GST_DEBUG_DUMP_DOT_DIR=/tmp gst-launch-1.0 splitmuxsrc location=file*.ts ! filesink location=output.ts
+
+#==============================================================================================
+#pipelinePublic6
+# Deinterlacing video using transcoding method
+gst-launch-1.0 filesrc location=interlaced.ts ! decodebin ! videoconvert ! deinterlace ! videoconvert ! videorate ! "video/x-raw,framerate=25/1" ! avenc_mpeg2video interlaced=false gop-size=25 bitrate=100000000 ! "video/mpeg,profile=main,level=main,parsed=true" ! mpegtsmux ! filesink location=deinterlaced.ts
