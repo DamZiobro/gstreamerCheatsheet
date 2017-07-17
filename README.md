@@ -91,3 +91,10 @@ RTP/UDP Streaming of H.264 content - Client
 ```
 gst-launch-1.0 -v udpsrc port=5000 caps=application/x-rtp ! rtph264depay ! avdec_h264 ! autovideosink
 ```
+
+Play Youtube Live stream as HLS video using GStreamer
+----
+![pipeline14](https://raw.githubusercontent.com/xmementoit/gstreamerPublicPipelines/master/pipeline14.png)
+```
+gst-launch-1.0 souphttpsrc is-live=true location="$(youtube-dl -f 94 -g 'https://www.youtube.com/watch?v=y60wDzZt8yg')" ! hlsdemux ! tsdemux name=mux mux. ! "video/x-h264,framerate=25/1" ! queue ! h264parse ! avdec_h264 ! videorate ! videoconvert ! ximagesink
+```
