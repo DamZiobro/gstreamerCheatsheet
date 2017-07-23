@@ -92,6 +92,13 @@ RTP/UDP Streaming of H.264 content - Client
 gst-launch-1.0 -v udpsrc port=5000 caps=application/x-rtp ! rtph264depay ! avdec_h264 ! autovideosink
 ```
 
+Play HLS (Http Live Streaming) URL using GStreamer pipeline
+----
+![pipeline14](https://raw.githubusercontent.com/xmementoit/gstreamerPublicPipelines/master/pipeline15.png)
+```
+gst-launch-1.0 souphttpsrc is-live=true location=http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8 ! hlsdemux ! decodebin ! videorate ! videoconvert ! ximagesink
+```
+
 Play Youtube Live stream as HLS video using GStreamer
 ----
 ![pipeline14](https://raw.githubusercontent.com/xmementoit/gstreamerPublicPipelines/master/pipeline14.png)
