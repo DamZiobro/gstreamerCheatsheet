@@ -106,7 +106,7 @@ Play Youtube Live stream as HLS video using GStreamer
 gst-launch-1.0 souphttpsrc is-live=true location="$(youtube-dl -f 94 -g 'https://www.youtube.com/watch?v=y60wDzZt8yg')" ! hlsdemux ! tsdemux name=mux mux. ! "video/x-h264,framerate=25/1" ! queue ! h264parse ! avdec_h264 ! videorate ! videoconvert ! ximagesink
 ```
 
-Capture your desktop and save into mp4 file
+Capture your desktop and save into avi file
 ----
 ![pipeline15](https://raw.githubusercontent.com/xmementoit/gstreamerPublicPipelines/master/pipeline15.png)
 ```
