@@ -112,3 +112,9 @@ Capture your desktop and save into avi file
 ```
 gst-launch-1.0 ximagesrc use-damage=0 ! video/x-raw,framerate=30/1 ! videoconvert ! x264enc ! avimux ! filesink location=out.avi
 ```
+
+Create live stream and stream it into Facebook Live streaming service
+----
+```
+gst-launch-1.0 flvmux name=mux streamable=true ! rtmpsink location="<rtmp_url_for_fblive>" videotestsrc is-live=true ! "video/x-raw,width=1280,height=720,framerate=30/1" ! identity sync=true ! x264enc bitrate=2500 key-int-max=60  ! video/x-h264,profile=high ! h264parse ! queue ! mux. audiotestsrc is-live=true ! audio/x-raw,rate=44100,channels=2 ! identity sync=true ! voaacenc bitrate=128000 ! queue ! mux.
+```
